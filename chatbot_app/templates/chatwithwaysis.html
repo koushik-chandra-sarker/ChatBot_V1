@@ -1,0 +1,71 @@
+
+{% extends 'base_chat_ui.html' %}
+
+{% block title %}Bot-Waysis{% endblock %}
+{% block ui_title %} Bot Waysis {% endblock %}
+{% block form %}
+            <form action="" method="post" id="sender_form">
+                {% csrf_token %}
+                <input type="text" class="form-control" id="message" name="message"
+                       placeholder="Write your message here...">
+                <button type="submit" class="btn btn-primary btn-sm" id="send">send</button>
+            </form>
+
+{% endblock %}
+
+
+{% block script %}
+<script>
+
+    {# This fuction for chat div's scroll start from bottom #}
+    function updateScroll() {
+        var element = document.querySelector(".chat_content");
+        element.scrollTop = element.scrollHeight;
+    }
+
+    $(() => {
+        updateScroll()
+    })
+
+    $('#send').click((e) => {
+        e.preventDefault()
+
+        {#get sender message#}
+        const message = $('#message').val()
+
+        {#update chat_content_inner div with sender message#}
+        $('.chat_content_inner').append(`<div class="sender">${message}</div>`)
+
+         updateScroll()
+        {#clear input#}
+        $('#message').val('')
+
+        {#get message and crfToken#}
+        const csr = $("input[name =csrfmiddlewaretoken]").val();
+        const obj = {message: message, csrfmiddlewaretoken: csr}
+
+        {#send message through ajax#}
+        $.ajax({
+            url: "send-to-bot-waysis/",
+            type: "POST",
+            data: obj,
+            dataType:'json',
+            success: (data) => {
+
+                {#if message send success -> update chat_content_inner div with reply#}
+                $('.chat_content_inner').append(`<div class="receiver">${data.reply}</div>`)
+                 updateScroll()
+            },
+            error:()=>{
+                $('.chat_content_inner:last').remove()
+            }
+        })
+
+    })
+
+</script>
+{% endblock %}
+
+
+</body>
+</html>
