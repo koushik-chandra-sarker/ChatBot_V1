@@ -65,3 +65,9 @@ def saveCustomBotDataset(request):
         return JsonResponse({"status": "true"})
 
     return JsonResponse({"status": "false"})
+
+
+def tain_waysis_bot(request):
+    dataset = CustomBotDataset.objects.filter(Q(active=True) & Q(answer__isnull=False) & Q(question__isnull=False))
+    BotWaysis.trainModel(dataset)
+    return JsonResponse({"status": "true"})

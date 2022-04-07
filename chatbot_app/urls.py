@@ -5,6 +5,7 @@ urlpatterns = [
     path("", views.Index),
     path("admin/", views.Bot_Admin),
     path("admin/saveCustomBotDataset/", views.saveCustomBotDataset),
+    path("admin/trainData/", views.tain_waysis_bot),
     path("corpus/", views.Bot_Corpus),
     path("waysis/", views.Bot_Waysis),
     path("corpus/send-to-botcorpus/", views.sendToBotCorpus),

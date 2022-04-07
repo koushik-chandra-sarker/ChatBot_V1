@@ -27,6 +27,8 @@
                 </button>
                 <button id="instances_btn" type="button" class="list-group-item list-group-item-action">Instances
                 </button>
+                <button id="train_btn" type="button" class="list-group-item list-group-item-action">Train Data
+                </button>
 
             </div>
         </div>
@@ -117,12 +119,15 @@
                             <th scope="row">1</th>
                             <td>{{ instance.question }}</td>
                             <td>{{ instance.answer }}</td>
-                            <td>
-                                {% if instance.active %}
-                                    <i class="fas fa-check"></i>
+                            <td >
+                            <div class="d-flex justify-content-center align-items-end">
+                                 {% if instance.active %}
+                                    <i class="fas fa-check bg-success status-icon "></i>
                                 {% else %}
-                                    <i class="fas fa-times"></i>
+                                    <i class="fas fa-times bg-danger status-icon"></i>
                                 {% endif %}
+                            </div>
+
                             </td>
                             <td>
                                 <button class="btn btn-warning btn-sm">Edit</button>
@@ -204,6 +209,29 @@
 
         })
         {#Save/update Reviewed Instance from Modal, end#}
+
+        $("#train_btn").click(() => {
+            let text = "Are you Want to Train Waysis Bot?"
+            if (confirm(text) === true) {
+                text = "It take some times in background, please wait..."
+                alert(text)
+                $.ajax({
+                    url: "trainData/",
+                    success: (data) => {
+                        if (data.status) {
+                            $('body').load(location.href);
+                            alert('Training Complete');
+                        } else {
+                            alert('Something went wrong!');
+                        }
+                    },
+                    error: () => {
+                        alert('Something went wrong!');
+                    }
+                })
+            }
+
+        })
 
     })
 
