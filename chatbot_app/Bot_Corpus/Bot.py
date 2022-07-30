@@ -12,9 +12,11 @@ chatbot = ChatBot(
     database_uri='sqlite:///BotCorpus.db'
 )
 trainer = ChatterBotCorpusTrainer(chatbot)
-trainer.train("chatterbot.corpus.english")
-trainer.train("chatterbot.corpus.bangla")
-
+# trainer.train("chatterbot.corpus.english")
+# trainer.train("chatterbot.corpus.bangla")
+trainer.train("corpus.bangla")
+trainer.train("corpus.english")
+trainer.train("corpus.anglo_bangla")
 
 def getResponse(message):
     response = chatbot.get_response(message)

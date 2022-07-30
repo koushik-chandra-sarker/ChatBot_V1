@@ -79,6 +79,7 @@ form {
     max-width: calc(100% - 80px);
     background: #EFEEFD;
     border-top-right-radius: 10px;
+    overflow-wrap: anywhere;
 }
 
 form input {
